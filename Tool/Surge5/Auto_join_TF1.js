@@ -85,7 +85,7 @@ async function autoPost(ID, ids) {
     'X-Session-Digest': `${$persistentStore.read('session_digest')}`,
     'X-Request-Id': `${$persistentStore.read('request_id')}`,
     'User-Agent': `${$persistentStore.read('tf_ua')}`,
-  };
+  }
 
     return new Promise((resolve) => {
         $httpClient.get({ url: testurl + ID, headers: header }, (error, response, data) => {
