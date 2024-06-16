@@ -85,7 +85,7 @@ async function autoPost(ID, ids) {
             
             if (response.status !== 200) {
                 console.log(`${ID} Liên kết không hợp lệ: Mã lỗi ${response.status}，Giữ nguyên APP_ID`);
-               // $notification.post('Liên kết không hợp lệ', '', `${ID} Không bị xóa`);
+               $notification.post('Liên kết không hợp lệ', '', `${ID} Không bị xóa`);
                 resolve();
                 return;
             }
