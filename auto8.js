@@ -7,9 +7,6 @@ async function autoPost(ID, ids) {
         'X-Request-Id': $persistentStore.read('request_id')
     };
 
-    // In ra thông tin debug
-    console.log(`autoPost: ID=${ID}, testurl=${testurl}, header=${JSON.stringify(header)}`);
-
     return new Promise(resolve => {
         $httpClient.get({url: testurl + ID, headers: header}, (error, response, data) => {
             if (error) {
