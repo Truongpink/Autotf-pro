@@ -1,3 +1,70 @@
+/*
+Time Update：2024.03.19 16:12
+Update：Tối ưu script, sửa lỗi, sửa cơ chế gỡ bỏ APP_ID không hợp lệ (chỉ gỡ bỏ khi link sai)
+*/
+
+if (typeof $request !== 'undefined' && $request) {
+    let url = $request.url;
+
+
+    let keyPattern = /^https:\/\/testflight\.apple\.com\/v3\/accounts\/(.*?)\/apps/;
+    let key = url.match(keyPattern) ? url.match(keyPattern)[1] : null;
+
+    if (/^https:\/\/testflight\.apple\.com\/v3\/accounts\/.*\/apps$/.test(url) && key) {
+        let headers = Object.fromEntries(Object.entries($request.headers).map(([key, value]) => [key.toLowerCase(), value]));
+        let session_id = headers['x-session-id'];
+        let session_digest = headers['x-session-digest'];
+        let request_id = headers['x-request-id'];
+
+        $persistentStore.write(session_id, 'session_id');
+        $persistentStore.write(session_digest, 'session_digest');
+        $persistentStore.write(request_id, 'request_id');
+        $persistentStore.write(key, 'key'); 
+
+        $notification.post('Thu thập thông tin thành công 🎉', '', 'Vui lòng chỉnh sửa các tham số để tắt tập lệnh sau khi lấy APP_ID');
+        console.log(`Thu thập thông tin thành công: session_id=${session_id}, session_digest=${session_digest}, request_id=${request_id}, key=${key}`);
+    } else if (/^https:\/\/testflight\.apple\.com\/join\/([A-Za-z0-9]+)$/.test(url)) {
+        const appIdMatch = url.match(/^https:\/\/testflight\.apple\.com\/join\/([A-Za-z0-9]+)$/);
+        if (appIdMatch && appIdMatch[1]) {
+            let appId = appIdMatch[1];
+            let existingAppIds = $persistentStore.read('APP_ID');
+            let appIdSet = new Set(existingAppIds ? existingAppIds.split(',') : []);
+            if (!appIdSet.has(appId)) {
+                appIdSet.add(appId);
+                $persistentStore.write(Array.from(appIdSet).join(','), 'APP_ID');
+                $notification.post('Tìm thấy APP_ID', '', `Đã lưu APP_ID: ${appId}`);
+                console.log(`Đã lưu APP_ID: ${appId}`);
+            } else {
+                $notification.post('APP_ID Lặp lại', '', `APP_ID: ${appId} APP_ID đã tồn tại，Không cần thêm lại.`);
+                console.log(`APP_ID: ${appId} APP_ID đã tồn tại，Không cần thêm lại.`);
+            }
+        } else {
+            console.log('TestFlight không hợp lệ, không có APP_ID');
+        }
+    }
+
+    $done({});
+} else {
+    !(async () => {
+        let ids = $persistentStore.read('APP_ID');
+        if (!ids) {
+            console.log('Không thấy APP_ID');
+            $done();
+        } else {
+            ids = ids.split(',');
+            for await (const ID of ids) {
+                await autoPost(ID, ids);
+            }
+            if (ids.length === 0) {
+                $notification.post('Tất cả Beta đã được thêm vào 🎉', '', 'Modul tự động tắt');
+                $done($httpAPI('POST', '/v1/modules', {'Auto Join TestFlight': false}));
+            } else {
+                $done();
+            }
+        }
+    })();
+}
+
 async function autoPost(ID, ids) {
     let Key = $persistentStore.read('key');
     let testurl = `https://testflight.apple.com/v3/accounts/${Key}/ru/`;
