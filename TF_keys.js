@@ -4,8 +4,6 @@ Nội dung được cập nhật: Đã thêm tính năng lưu giữ hoặc biế
 
 Surge5
 https://raw.githubusercontent.com/Hely-T/TestFlight-All/master/Tool/Surge5/Surge/AUTOTF.sgmodule
-BoxJS
-https://raw.githubusercontent.com/Hely-T/TestFlight-All/master/Tool/Surge5/boxjs.json
 */
 
 if (typeof $request !== 'undefined' && $request) {
