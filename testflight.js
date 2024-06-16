@@ -34,8 +34,16 @@ handleTestFlightJoin(testflightUrl);
 // Các dòng mã khác trong script testflight.js có thể ở đây...
 if (typeof $request !== 'undefined' && $request) {
     let url = $request.url;
-    let keyPattern = /^https:\/\/testflight\.apple\.com\/v3\/accounts\/(.*?)\/apps/;
-    let key = url.match(keyPattern) ? url.match(keyPattern)[1] : null;
+    let keyPattern = /^https:\/\/testflight\.apple\.com\/v3\/accounts\/([^\/]+)\/apps\/([A-Za-z0-9]+)/;
+let key = url.match(keyPattern);
+
+if (key) {
+    let accountId = key[1];
+    let appId = key[2];
+    // Tiếp tục xử lý với accountId và appId đã trích xuất
+} else {
+    // Xử lý khi không tìm thấy key từ URL
+}
 
     if (/^https:\/\/testflight\.apple\.com\/v3\/accounts\/.*\/apps$/.test(url) && key) {
         let headers = Object.fromEntries(Object.entries($request.headers).map(([key, value]) => [key.toLowerCase(), value]));
