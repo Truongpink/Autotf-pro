@@ -10,6 +10,33 @@ Các bước sử dụng cụ thể
 - Đi tới Profile -> Plugin -> Chọn vào Script, trong mục APP_ID điền ID của TF bạn muốn tham gia làm giá trị, (ID là ký tự sau khi nối liên kết https://testflight.apple.com/join/LPQmtkUs String (nghĩa là "LPQmtkUs" trong ví dụ này)⚠️: hỗ trợ liên kết TF không giới hạn, mỗi liên kết cần phân tách bằng dấu phẩy "," (chẳng hạn như: LPQmtkUs ,Hgun65jg,8yhJgv)
 )
 */
+// Định nghĩa hàm để lấy APP_ID từ URL
+function extractAppIdFromUrl(url) {
+    const regex = /\/join\/([^\/]+)/; // Biểu thức chính quy để lấy phần cuối cùng của đường dẫn
+
+    const match = url.match(regex); // Sử dụng phương thức match để lấy kết quả khớp với biểu thức chính quy
+
+    if (match) {
+        return match[1]; // Trả về phần tử khớp thứ nhất từ kết quả match, đó là APP_ID
+    } else {
+        return null; // Trả về null nếu không tìm thấy APP_ID trong URL
+    }
+}
+
+// URL ví dụ cần trích xuất APP_ID
+const testflightUrl = "https://testflight.apple.com/join/C1a3MRG4";
+
+// Sử dụng hàm để lấy APP_ID từ URL
+const APP_ID = extractAppIdFromUrl(testflightUrl);
+
+// Kiểm tra và log ra kết quả
+if (APP_ID) {
+    console.log("Extracted APP_ID:", APP_ID);
+} else {
+    console.log("Không tìm thấy APP_ID trong URL.");
+}
+
+// Các dòng mã khác trong script testflight.js có thể ở đây...
 const reg1 = /^https:\/\/testflight\.apple\.com\/v3\/accounts\/(.*)\/apps$/;
 const reg2 = /^https:\/\/testflight\.apple\.com\/join\/(.*)/;
 if (reg1.test($request.url)) {
