@@ -76,16 +76,6 @@ if (typeof $request !== 'undefined' && $request) {
         }
     })()
 }
-
-async function autoPost(ID, ids) {
-    let Key = $persistentStore.read('key')
-    let testurl = `https://testflight.apple.com/v3/accounts/${Key}/join/${appId}`;
-   let header = {
-    'X-Session-Id': `${$persistentStore.read('session_id')}`,
-    'X-Session-Digest': `${$persistentStore.read('session_digest')}`,
-    'X-Request-Id': `${$persistentStore.read('request_id')}`,
-    'User-Agent': `${$persistentStore.read('tf_ua')}`,
-  }
 async function autoPost(ID, ids) {
     let Key = $persistentStore.read('key')
     let testurl = `https://testflight.apple.com/v3/accounts/${Key}/ru/`
