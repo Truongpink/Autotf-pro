@@ -1,42 +1,8 @@
-// Hàm để trích xuất APP_ID từ URL tham gia TestFlight
-function extractAppIdFromUrl(url) {
-    const regex = /\/join\/([^\/]+)/; // Biểu thức chính quy để lấy phần cuối cùng của đường dẫn
 
-    const match = url.match(regex); // Sử dụng phương thức match để lấy kết quả khớp với biểu thức chính quy
-
-    if (match) {
-        return match[1]; // Trả về phần tử khớp thứ nhất từ kết quả match, đó là APP_ID
-    } else {
-        return null; // Trả về null nếu không tìm thấy APP_ID trong URL
-    }
-}
-
-// Function to handle TestFlight join process
-function handleTestFlightJoin(url) {
-    // Trích xuất APP_ID từ URL
-    const APP_ID = extractAppIdFromUrl(url);
-
-    // Kiểm tra và log kết quả
-    if (APP_ID) {
-        console.log("APP_ID đã trích xuất:", APP_ID);
-        // Gọi hàm hoặc thực hiện các hành động khác với APP_ID ở đây...
-    } else {
-        console.log("Không thể trích xuất APP_ID từ URL.");
-    }
-}
-
-// Ví dụ URL tham gia TestFlight
-const testflightUrl = "https://testflight.apple.com/join/1SyedSId";
-
-// Xử lý quá trình tham gia TestFlight với URL cho trước
-handleTestFlightJoin(testflightUrl);
-
-// Các dòng mã khác trong script testflight.js có thể ở đây...
 if (typeof $request !== 'undefined' && $request) {
     let url = $request.url;
     let keyPattern = /^https:\/\/testflight\.apple\.com\/v3\/accounts\/([^\/]+)\/apps\/([A-Za-z0-9]+)/;
 let key = url.match(keyPattern);
-
 if (key) {
     let accountId = key[1];
     let appId = key[2];
