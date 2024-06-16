@@ -67,8 +67,7 @@ async function autoPost(ID, ids) {
         'X-Request-Id': $persistentStore.read('request_id')
     };
 
-    // In ra thông tin debug
-    console.log(`autoPost: ID=${ID}, testurl=${testurl}, header=${JSON.stringify(header)}`);
+
 
     return new Promise(resolve => {
         $httpClient.get({url: testurl + ID, headers: header}, (error, response, data) => {
@@ -83,10 +82,10 @@ async function autoPost(ID, ids) {
                 resolve();
                 return;
             }
-
+            
             if (response.status !== 200) {
                 console.log(`${ID} Liên kết không hợp lệ: Mã lỗi ${response.status}，Giữ nguyên APP_ID`);
-                $notification.post('Liên kết không hợp lệ', '', `${ID} Không bị xóa`);
+               // $notification.post('Liên kết không hợp lệ', '', `${ID} Không bị xóa`);
                 resolve();
                 return;
             }
