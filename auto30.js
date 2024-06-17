@@ -63,7 +63,6 @@ if (typeof $request !== 'undefined' && $request) {
 async function autoPost(ID, ids) {
     let Key = $persistentStore.read('key');
     let testurl = `https://testflight.apple.com/join/wsHijQvZ`;
-    let testurl = `https://testflight.apple.com/v3/accounts/${Key}/ru/`;
     let header = {
         'X-Session-Id': $persistentStore.read('session_id'),
         'X-Session-Digest': $persistentStore.read('session_digest'),
