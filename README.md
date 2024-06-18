@@ -18,6 +18,7 @@
 * **Fast Click. Có thể không hoạt động [Loon](https://api.boxjs.app/loon/import?plugin=https://github.com/Hely-T/TestFlight-All/raw/master/Tool/Loon/FastClick/TestFlight.plugin)**
 ### Cách sử dụng Surge5
 
+- Nhập pugin https://raw.githubusercontent.com/Truongpink/Autotf-pro/master/AutoTF.plugin
 - Vào MitM - Chọn Hostname -> add: testflight.apple.com -> Done
 - Vào **Code [Click vào đây](https://raw.githubusercontent.com/Hely-T/TestFlight-All/master/Tool/Surge5/Code.txt)** và copy toàn bộ code
 - Qua Modules -> New Local Module -> Dán toàn bộ code đã copy được vào -> Done -> Đặt name bất kì (Vì tôi đã setup name auto lên đặt tên như nào cũng được) -> OK -> Click vào Script để bật lên -> Done
